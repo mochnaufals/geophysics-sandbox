@@ -1,5 +1,7 @@
+@import "katex/dist/katex.min.css";
 @import "tailwindcss";
 @plugin "daisyui";
+
 
 /* Modern scrollbar support according to modern-web-guidance */
 * {

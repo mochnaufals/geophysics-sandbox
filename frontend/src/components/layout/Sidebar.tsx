@@ -45,8 +45,15 @@ export function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
       id: 'signal-processing',
       name: 'Signal Processing',
       icon: Radio,
-      modules: [],
+      modules: [
+        {
+          id: 'fourier-1d',
+          title: '1D Fourier Transform',
+          route: '/modules/signal-processing/fourier-1d',
+        },
+      ],
     },
+
     {
       id: 'petrophysics',
       name: 'Petrophysics',

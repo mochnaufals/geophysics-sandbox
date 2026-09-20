@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ModulesSignalProcessingFourier1dRouteImport } from './routes/modules.signal-processing.fourier-1d'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModulesSignalProcessingFourier1dRoute =
+  ModulesSignalProcessingFourier1dRouteImport.update({
+    id: '/modules/signal-processing/fourier-1d',
+    path: '/modules/signal-processing/fourier-1d',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/modules/signal-processing/fourier-1d'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/modules/signal-processing/fourier-1d'
+  id: '__root__' | '/' | '/modules/signal-processing/fourier-1d'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ModulesSignalProcessingFourier1dRoute: typeof ModulesSignalProcessingFourier1dRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modules/signal-processing/fourier-1d': {
+      id: '/modules/signal-processing/fourier-1d'
+      path: '/modules/signal-processing/fourier-1d'
+      fullPath: '/modules/signal-processing/fourier-1d'
+      preLoaderRoute: typeof ModulesSignalProcessingFourier1dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ModulesSignalProcessingFourier1dRoute: ModulesSignalProcessingFourier1dRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
