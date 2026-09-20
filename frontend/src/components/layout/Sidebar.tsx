@@ -51,8 +51,19 @@ export function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           title: '1D Fourier Transform',
           route: '/modules/signal-processing/fourier-1d',
         },
+        {
+          id: 'sampling-aliasing',
+          title: 'Sampling & Aliasing',
+          route: '/modules/signal-processing/sampling-aliasing',
+        },
+        {
+          id: 'wavelet-phase',
+          title: 'Wavelet Phase & Character',
+          route: '/modules/signal-processing/wavelet-phase',
+        },
       ],
     },
+
 
     {
       id: 'petrophysics',

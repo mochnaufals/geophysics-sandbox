@@ -94,3 +94,96 @@ export async function analyzeFourier1D(payload: Fourier1DRequest): Promise<Fouri
   })
 }
 
+// ---------------- Sampling & Frequency Aliasing ----------------
+
+export interface SamplingAliasingRequest {
+  frequency_hz: number
+  dt_s: number
+  duration_s?: number
+  amplitude?: number
+  apply_anti_alias?: boolean
+  waveform_type?: 'sinusoid' | 'multi_harmonic'
+}
+
+export interface SamplingAliasingMetrics {
+  true_frequency_hz: number
+  sampling_interval_ms: number
+  sampling_frequency_hz: number
+  nyquist_frequency_hz: number
+  alias_frequency_hz: number
+  is_aliased: boolean
+  perceived_dominant_freq_hz: number
+
+  anti_alias_applied: boolean
+  sample_count: number
+}
+
+export interface SamplingAliasingResponse {
+  true_continuous_series: [number, number][]
+  alias_continuous_series: [number, number][]
+  sampled_dots: [number, number][]
+  spectrum_series: [number, number][]
+  metrics: SamplingAliasingMetrics
+}
+
+export async function analyzeSamplingAliasing(
+  payload: SamplingAliasingRequest
+): Promise<SamplingAliasingResponse> {
+  return apiFetch<SamplingAliasingResponse>('/api/v1/signal-processing/sampling-aliasing/analyze', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+// ---------------- Wavelet Phase & Character ----------------
+
+export interface WaveletPhaseRequest {
+  peak_frequency_hz?: number
+  phase_rotation_deg?: number
+  length_s?: number
+  dt_s?: number
+}
+
+export interface WaveletPhaseMetrics {
+  peak_frequency_hz: number
+  phase_rotation_deg: number
+  zero_phase_peak: number
+  rotated_peak: number
+  min_phase_50pct_ms: number
+  max_phase_50pct_ms: number
+  zero_phase_50pct_ms: number
+  is_minimum_phase_frontloaded: boolean
+}
+
+export interface WaveletPhaseResponse {
+  waveforms: {
+    zero_phase: [number, number][]
+    rotated: [number, number][]
+    minimum_phase: [number, number][]
+    maximum_phase: [number, number][]
+  }
+  energies: {
+    zero_phase: [number, number][]
+    rotated: [number, number][]
+    minimum_phase: [number, number][]
+    maximum_phase: [number, number][]
+  }
+  spectra: {
+    amplitude: [number, number][]
+    phase_zero: [number, number][]
+    phase_rotated: [number, number][]
+    phase_min: [number, number][]
+  }
+  metrics: WaveletPhaseMetrics
+}
+
+export async function analyzeWaveletPhase(
+  payload: WaveletPhaseRequest
+): Promise<WaveletPhaseResponse> {
+  return apiFetch<WaveletPhaseResponse>('/api/v1/signal-processing/wavelet-phase/analyze', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+

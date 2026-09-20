@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ModulesSignalProcessingFourier1dRouteImport } from './routes/modules.signal-processing.fourier-1d'
+import { Route as ModulesSignalProcessingSamplingAliasingRouteImport } from './routes/modules.signal-processing.sampling-aliasing'
+import { Route as ModulesSignalProcessingWaveletPhaseRouteImport } from './routes/modules.signal-processing.wavelet-phase'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,31 +25,64 @@ const ModulesSignalProcessingFourier1dRoute =
     path: '/modules/signal-processing/fourier-1d',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ModulesSignalProcessingSamplingAliasingRoute =
+  ModulesSignalProcessingSamplingAliasingRouteImport.update({
+    id: '/modules/signal-processing/sampling-aliasing',
+    path: '/modules/signal-processing/sampling-aliasing',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ModulesSignalProcessingWaveletPhaseRoute =
+  ModulesSignalProcessingWaveletPhaseRouteImport.update({
+    id: '/modules/signal-processing/wavelet-phase',
+    path: '/modules/signal-processing/wavelet-phase',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
+  '/modules/signal-processing/sampling-aliasing': typeof ModulesSignalProcessingSamplingAliasingRoute
+  '/modules/signal-processing/wavelet-phase': typeof ModulesSignalProcessingWaveletPhaseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
+  '/modules/signal-processing/sampling-aliasing': typeof ModulesSignalProcessingSamplingAliasingRoute
+  '/modules/signal-processing/wavelet-phase': typeof ModulesSignalProcessingWaveletPhaseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/modules/signal-processing/fourier-1d': typeof ModulesSignalProcessingFourier1dRoute
+  '/modules/signal-processing/sampling-aliasing': typeof ModulesSignalProcessingSamplingAliasingRoute
+  '/modules/signal-processing/wavelet-phase': typeof ModulesSignalProcessingWaveletPhaseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/modules/signal-processing/fourier-1d'
+  fullPaths:
+    | '/'
+    | '/modules/signal-processing/fourier-1d'
+    | '/modules/signal-processing/sampling-aliasing'
+    | '/modules/signal-processing/wavelet-phase'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/modules/signal-processing/fourier-1d'
-  id: '__root__' | '/' | '/modules/signal-processing/fourier-1d'
+  to:
+    | '/'
+    | '/modules/signal-processing/fourier-1d'
+    | '/modules/signal-processing/sampling-aliasing'
+    | '/modules/signal-processing/wavelet-phase'
+  id:
+    | '__root__'
+    | '/'
+    | '/modules/signal-processing/fourier-1d'
+    | '/modules/signal-processing/sampling-aliasing'
+    | '/modules/signal-processing/wavelet-phase'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModulesSignalProcessingFourier1dRoute: typeof ModulesSignalProcessingFourier1dRoute
+  ModulesSignalProcessingSamplingAliasingRoute: typeof ModulesSignalProcessingSamplingAliasingRoute
+  ModulesSignalProcessingWaveletPhaseRoute: typeof ModulesSignalProcessingWaveletPhaseRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,12 +101,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModulesSignalProcessingFourier1dRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modules/signal-processing/sampling-aliasing': {
+      id: '/modules/signal-processing/sampling-aliasing'
+      path: '/modules/signal-processing/sampling-aliasing'
+      fullPath: '/modules/signal-processing/sampling-aliasing'
+      preLoaderRoute: typeof ModulesSignalProcessingSamplingAliasingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modules/signal-processing/wavelet-phase': {
+      id: '/modules/signal-processing/wavelet-phase'
+      path: '/modules/signal-processing/wavelet-phase'
+      fullPath: '/modules/signal-processing/wavelet-phase'
+      preLoaderRoute: typeof ModulesSignalProcessingWaveletPhaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModulesSignalProcessingFourier1dRoute: ModulesSignalProcessingFourier1dRoute,
+  ModulesSignalProcessingSamplingAliasingRoute:
+    ModulesSignalProcessingSamplingAliasingRoute,
+  ModulesSignalProcessingWaveletPhaseRoute:
+    ModulesSignalProcessingWaveletPhaseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
