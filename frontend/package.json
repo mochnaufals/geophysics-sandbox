@@ -15,6 +15,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.103.1",
     "@tanstack/react-router": "^1.170.38",
+    "cmdk": "^1.1.1",
     "daisyui": "5.7.42",
     "echarts": "^6.1.0",
     "katex": "^0.18.7",

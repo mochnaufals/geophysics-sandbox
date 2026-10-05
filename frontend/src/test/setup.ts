@@ -23,6 +23,11 @@ globalThis.ResizeObserver = class ResizeObserver {
   disconnect = vi.fn()
 }
 
+// Mock scrollIntoView for jsdom
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = vi.fn()
+}
+
 // Mock HTMLCanvasElement getContext for ECharts in JSDOM
 const mockContext = {
   fillRect: vi.fn(),

@@ -6,9 +6,14 @@ export interface NavbarProps {
   onToggleSidebar: () => void
   sidebarCollapsed: boolean
   title?: string
+  onOpenSearch?: () => void
 }
 
-export function Navbar({ onToggleSidebar, title = 'Geophysics Sandbox' }: NavbarProps) {
+export function Navbar({
+  onToggleSidebar,
+  title = 'Geophysics Sandbox',
+  onOpenSearch,
+}: NavbarProps) {
   // Query backend health every 30 seconds
   const { data: health, isSuccess, isLoading } = useQuery({
     queryKey: ['backend-health'],
@@ -36,21 +41,37 @@ export function Navbar({ onToggleSidebar, title = 'Geophysics Sandbox' }: Navbar
         </div>
       </div>
 
-      {/* Center: Search / Quick Find (Mock / Interactive) */}
+      {/* Center: Search / Quick Find (Interactive Command Palette Trigger) */}
       <div className="hidden md:flex items-center">
-        <label className="input input-sm input-bordered flex items-center gap-2 w-64 bg-base-200/50">
-          <Search className="h-3.5 w-3.5 text-base-content/50" />
-          <input
-            type="text"
-            className="grow text-xs placeholder:text-base-content/40"
-            placeholder="Quick search topics & modules..."
-          />
-          <kbd className="kbd kbd-xs text-[10px]">Ctrl+K</kbd>
-        </label>
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          className="input input-sm input-bordered flex items-center justify-between w-72 bg-base-200/50 hover:bg-base-200 hover:border-primary/40 cursor-pointer transition-colors text-left group"
+          aria-label="Quick search topics & modules (Ctrl+K)"
+        >
+          <div className="flex items-center gap-2 overflow-hidden">
+            <Search className="h-3.5 w-3.5 text-base-content/50 shrink-0 group-hover:text-primary transition-colors" />
+            <span className="text-xs text-base-content/50 truncate">Quick search topics & modules...</span>
+          </div>
+          <kbd className="kbd kbd-xs text-[10px] bg-base-300/80 text-base-content/70 border-base-300 shrink-0">
+            Ctrl+K
+          </kbd>
+        </button>
       </div>
 
-      {/* Right: Backend Status Indicator */}
+      {/* Right: Search Mobile Trigger + Backend Status Indicator */}
       <div className="flex items-center gap-2">
+        {/* Mobile Search Button */}
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          className="btn btn-ghost btn-sm btn-square md:hidden"
+          aria-label="Search topics and modules"
+          title="Search topics and modules (Ctrl+K)"
+        >
+          <Search className="h-4 w-4 text-base-content/70" />
+        </button>
+
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}

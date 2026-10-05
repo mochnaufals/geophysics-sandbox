@@ -10,6 +10,15 @@ export function getInitialTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
+export function toggleGlobalTheme(): Theme {
+  const current = (document.documentElement.getAttribute('data-theme') as Theme) || getInitialTheme()
+  const next: Theme = current === 'light' ? 'dark' : 'light'
+  document.documentElement.setAttribute('data-theme', next)
+  localStorage.setItem('geophysics-theme', next)
+  window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }))
+  return next
+}
+
 export function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
@@ -17,6 +26,17 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('geophysics-theme', theme)
     window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }))
+  }, [theme])
+
+  useEffect(() => {
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ theme: Theme }>
+      if (customEvent.detail?.theme && customEvent.detail.theme !== theme) {
+        setTheme(customEvent.detail.theme)
+      }
+    }
+    window.addEventListener('themechange', handleThemeChange)
+    return () => window.removeEventListener('themechange', handleThemeChange)
   }, [theme])
 
   const toggleTheme = () => {

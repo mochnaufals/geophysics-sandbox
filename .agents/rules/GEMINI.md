@@ -76,6 +76,7 @@ graph LR
 - **Routing & State**: TanStack Router + TanStack Query.
 - **Math Typography**: KaTeX (`katex`) for formulas in theory drawers and annotations.
 - **Charts**: Apache ECharts (`echarts`).
+- **Command Palette & Search**: `cmdk` for accessible, unstyled `Ctrl+K` / `Cmd+K` global search and quick actions.
 
 ### Backend Stack
 - **Framework**: FastAPI (Python 3.12+).
@@ -184,6 +185,7 @@ Write modular, clean, and reusable code across the entire stack:
   └── <Module>Controls.tsx       # Parameter sliders, presets, toggles
   ```
 - **Common Components**: Place shared UI elements (e.g., `MathFormula`, `ThemeToggle`, `Navbar`, `Sidebar`, `EChart`, `ImageChart`) in `frontend/src/components/common/`, `frontend/src/components/layout/`, or `frontend/src/components/charts/`.
+- **Search Discoverability (`CommandPalette.tsx`)**: When introducing any new educational module or domain, register its title, route, and domain-specific keywords (equations, wavelet types, physical parameters) into `frontend/src/components/layout/CommandPalette.tsx` to maintain 100% discoverability via `Ctrl+K`.
 - **API Client Centralization**: Centralize all typed fetch requests in `frontend/src/lib/api.ts`. Do not write ad-hoc `fetch()` calls inside individual components.
 
 ---
@@ -323,4 +325,5 @@ Before concluding any implementation task:
 | **Math & Physics** | Decouple pure math into `backend/app/modules/`. Include units & citations. | Do not mix math logic into FastAPI endpoint handlers. |
 | **Types** | Write strict Pydantic models and strict TypeScript interfaces. | **NO `any` types**. No untyped dictionaries or endpoints. |
 | **Testing** | Write and execute unit tests (`pytest` & `vitest`) after every change. | Do not claim completion without running the test suite. |
+| **Search & Discovery** | Register new routes and keywords in `CommandPalette.tsx` for `Ctrl+K`. | Do not leave new modules unsearchable in the command palette. |
 | **UI Components** | Use DaisyUI v5 classes and responsive Tailwind v4 styles. | Do not write hardcoded style hacks or arbitrary color codes. |
